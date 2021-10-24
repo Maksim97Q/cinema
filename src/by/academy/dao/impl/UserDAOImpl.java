@@ -3,14 +3,10 @@ package by.academy.dao.impl;
 import by.academy.dao.ConnectionDAO;
 import by.academy.dao.Password;
 import by.academy.dao.UserDAO;
-import by.academy.model.Movie;
 import by.academy.model.User;
-import by.academy.model.Users;
 import com.mysql.jdbc.PreparedStatement;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -82,9 +78,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public String userX(User user) throws SQLException {
-        Users users = Users.USER;
-        Users manager = Users.MANAGER;
-        Users admin = Users.ADMIN;
         Connection connection = ConnectionDAO.connection();
         PreparedStatement stmt = (PreparedStatement) connection
                 .prepareStatement("SELECT login, password, user_level FROM user WHERE login=? AND password=?");

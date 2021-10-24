@@ -51,11 +51,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String UserX(User user) {
         try {
-            userDAOImpl.userX(user);
+            return userDAOImpl.userX(user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+        return null;
     }
 }
 

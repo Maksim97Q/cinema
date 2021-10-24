@@ -158,11 +158,18 @@ public class Controller implements ControllerStart {
     }
 
     public void loginToTheApplication() {
-        if (userServiceImpl.UserX(this.user)) {
+        String s = userServiceImpl.UserX(reads(this.user));
+        if (s.equals("admin")) {
+            choiceOfRole();
+        }
+        if (s.equals("user")) {
             regularUserMenu();
-        } else
-            System.err.println("неправильный логин или пароль");
+        }
+        if (s.equals("manager")) {
+
+        }
     }
+
 
     public User reads(User user) {
         Scanner scanner = new Scanner(System.in);
