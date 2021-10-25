@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String UserX(User user) {
+    public String UserRole(User user) {
         try {
             return userDAOImpl.userX(user);
         } catch (SQLException e) {

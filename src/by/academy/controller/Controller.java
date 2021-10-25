@@ -52,59 +52,87 @@ public class Controller implements ControllerStart {
                         System.out.println("---Пользователь завершил работу с приложением.");
                         break;
                     }
-                    if (enter == 1) {
+                    if (enter == 1)
                         registration();
-                    }
-                    if (enter == 2) {
+                    if (enter == 2)
                         loginToTheApplication();
-                    }
-                } else
-                    System.err.println("введите цыфры от 0 до 2 \n");
-            } else
-                System.err.println("введите цыфры \n");
+                } else System.err.println("введите цыфры от 0 до 2 \n");
+            } else System.err.println("введите цыфры \n");
         }
     }
-    public void choiceOfRole() {
+
+    public void menuAdmins() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("открыто меню выбора пользователя");
-            System.out.println("для выхода из меню нажмите 0");
-            System.out.println("вы зашли как:");
-            System.out.println("1 - обычный пользователь");
-            System.out.println("2 - менеджер");
-            System.out.println("3 - админ");
+            System.out.println("открыто меню для admins");
+            System.out.println("выйти из меню admins нажмите 0");
+            System.out.println("для удаления users нажмите 1");
+            System.out.println("для изменения users нажмите 2");
+            System.out.println("для удаления movies нажмите 3");
+            System.out.println("для изменения movies нажмите 4");
             if (scanner.hasNextInt()) {
                 int enter = scanner.nextInt();
-                if (enter == 0) {
-                    break;
-                }
-                if (enter == 1) {
-                    
-                }
-                if (enter == 2) {
+                if (enter >= 0 && enter <= 4) {
+                    if (enter == 0)
+                        break;
+                    if (enter == 1) {
+                        if (userServiceImpl.delete(deleteUsers(this.user)))
+                            System.out.println("---пользователь удалён");
+                        else System.err.println("нет такого пользователя");
+                    }
+                    if (enter == 2) {
+                        if (userServiceImpl.update(updateUsers(this.user)))
+                            System.out.println("---пользователь с id " + user.getId() + " изменён");
+                        else System.err.println("пользователя с id " + user.getId() + " не существует");
+                    }
+                    if (enter == 3) {
+                        if (movieServiceImpl.delete(movie)) {
 
+                        }
+                    }
+                    if (enter == 4) {
+                        if (movieServiceImpl.update(updateMovies(this.movie)))
+                            System.out.println("фильм с id " + movie.getId() + " изменён");
+                        else System.out.println("фильма с id " + movie.getId() + " не существует");
+                    }
+                } else System.err.println("введите цыфры от 0 до 4");
+            } else System.err.println("введите цыфры");
+        }
+    }
+
+    public void menuManagers() {
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("открыто меню для managers");
+            System.out.println("выйти из меню managers нажмите 0");
+            System.out.println("для изменения movies нажмите 1");
+            System.out.println("");
+            if (scanner.hasNextInt()) {
+                int enter = scanner.nextInt();
+                if (enter == 0)
+                    break;
+                if (enter == 1) {
+                    if (movieServiceImpl.update(updateMovies(this.movie)))
+                        System.out.println("фильм с id " + movie.getId() + " изменён");
+                    else System.out.println("фильма с id " + movie.getId() + " не существует");
                 }
             }
         }
     }
 
-    private void regularUserMenu() {
+    private void menuUsers() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("открыто главное меню");
-            System.out.println("выйти из главного меню нажмите 0");
-            System.out.println("для выбора фильма нажмите 1");
+            System.out.println("открыто меню для users");
+            System.out.println("выйти из меню users нажмите 0");
+            System.out.println("для просмотра movies нажмите 1");
             System.out.println("для покупки билета нажмите 2");
-            System.out.println("для росмотра купленных билетов нажмите 3");
-            System.out.println("для редактирования фильма нажмите 4");
-            System.out.println("для удаления пользователя нажмите 5");
-            System.out.println("для изменения пользователя нажмите 6");
+            System.out.println("для просмотра купленных билетов нажмите 3");
             if (scanner.hasNextInt()) {
                 int enter = scanner.nextInt();
                 if (enter >= 0 && enter <= 10) {
-                    if (enter == 0) {
+                    if (enter == 0)
                         break;
-                    }
                     if (enter == 1) {
                         List<Movie> read = movieServiceImpl.read(this.movie);
                         read.forEach(System.out::println);
@@ -118,26 +146,6 @@ public class Controller implements ControllerStart {
                         tickets.forEach(System.out::println);
                         System.out.println("\n");
                     }
-                    if (enter == 4) {
-                        movieServiceImpl.update(updateMovies(this.movie));
-                    }
-                    if (enter == 5) {
-                        if (userServiceImpl.delete(deleteUsers(this.user))) {
-                            System.out.println("---пользователь удалён");
-                        } else {
-                            System.err.println("нет такого пользователя");
-                        }
-                    }
-                    if (enter == 6) {
-                        if (userServiceImpl.update(updateUsers(this.user))) {
-                            System.out.println("---пользователь с id " + user.getId() + " изменён");
-                        } else {
-                            System.err.println("пользователя с id " + user.getId() + " не существует");
-                        }
-                    }
-                    if (enter == 7) {
-                        movieServiceImpl.delete(movie);
-                    }
                 } else
                     System.err.println("введите цыфры от 0 до 3");
             } else
@@ -146,30 +154,28 @@ public class Controller implements ControllerStart {
     }
 
     private void registration() {
-        if (userServiceImpl.create(reads(this.user))){
+        if (userServiceImpl.create(reads(this.user))) {
             System.out.println("---пользователь " + user.getLogin() + " зарегестрировался");
             System.out.println("---дата и время входа " + new SimpleDateFormat("yyyy.MM.dd / HH:mm:ss").format(Calendar.getInstance().getTime()));
             System.out.println("---------------------------------");
-            regularUserMenu();
-        } else{
+            menuUsers();
+        } else {
             System.err.println("пользователь с таким логином есть");
             System.out.println("---------------------------------");
         }
     }
 
     public void loginToTheApplication() {
-        String s = userServiceImpl.UserX(reads(this.user));
-        if (s.equals("admin")) {
-            choiceOfRole();
-        }
-        if (s.equals("user")) {
-            regularUserMenu();
-        }
-        if (s.equals("manager")) {
-
-        }
+        String userRole = userServiceImpl.UserRole(reads(this.user));
+        if (userRole != null) {
+            if (userRole.equals("admin"))
+                menuAdmins();
+            if (userRole.equals("user"))
+                menuUsers();
+            if (userRole.equals("manager"))
+                menuManagers();
+        } else System.err.println("неверный логин или пароль \n");
     }
-
 
     public User reads(User user) {
         Scanner scanner = new Scanner(System.in);
@@ -212,6 +218,7 @@ public class Controller implements ControllerStart {
         user.setId(id);
         return user;
     }
+
     public User updateUsers(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-введите новый логин");
@@ -225,6 +232,7 @@ public class Controller implements ControllerStart {
         user.setId(id);
         return user;
     }
+
     public Movie deleteMovies(Movie movie) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("введите ");

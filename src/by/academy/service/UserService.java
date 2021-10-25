@@ -9,5 +9,5 @@ public interface UserService {
 
     boolean update(User user);
 
-    String UserX(User user);
+    String UserRole(User user);
 }
