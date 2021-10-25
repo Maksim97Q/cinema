@@ -5,7 +5,7 @@ import by.academy.model.User;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Password {
+public class PasswordUsers {
 
     public StringBuilder password(User user) {
         try {

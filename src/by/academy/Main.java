@@ -2,7 +2,7 @@ package by.academy;
 
 import by.academy.controller.Controller;
 import by.academy.controller.ControllerStart;
-import by.academy.dao.Password;
+import by.academy.dao.PasswordUsers;
 import by.academy.dao.impl.MovieDAOImpl;
 import by.academy.dao.impl.TicketDAOImpl;
 import by.academy.dao.impl.UserDAOImpl;
@@ -18,7 +18,7 @@ public class Main {
         ControllerStart controller = new Controller(
                 new TicketServiceImpl(new TicketDAOImpl()),
                 new MovieServiceImpl(new MovieDAOImpl()),
-                new UserServiceImpl(new UserDAOImpl(new Password())),
+                new UserServiceImpl(new UserDAOImpl(new PasswordUsers())),
                 new User(),
                 new Movie(),
                 new Ticket());

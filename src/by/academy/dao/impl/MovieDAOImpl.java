@@ -39,7 +39,7 @@ public class MovieDAOImpl implements MovieDAO {
     public boolean updateMovie(Movie movie) throws SQLException {
         Connection connection = ConnectionDAO.connection();
         PreparedStatement stmt = (PreparedStatement) connection
-                .prepareStatement("SELECT name, number_time FROM movie WHERE name=? AND id=?");
+                .prepareStatement("SELECT id, name, number_time FROM movie WHERE name=? AND id=?");
         stmt.setString(1, movie.getNameMovie());
         stmt.setInt(2, movie.getId());
         ResultSet a = stmt.executeQuery();
@@ -78,10 +78,9 @@ public class MovieDAOImpl implements MovieDAO {
     public boolean createMovie(Movie movie) throws SQLException {
         Connection connection = ConnectionDAO.connection();
         PreparedStatement stmt = (PreparedStatement) connection
-                .prepareStatement("SELECT id, name, number_time FROM movie WHERE id=? AND name=? AND number_time=?");
-        stmt.setInt(1, movie.getId());
-        stmt.setString(2, movie.getNameMovie());
-        stmt.setString(3, movie.getDate());
+                .prepareStatement("SELECT name, number_time FROM movie WHERE name=? AND number_time=?");
+        stmt.setString(1, movie.getNameMovie());
+        stmt.setString(2, movie.getDate());
         ResultSet a = stmt.executeQuery();
         if (!a.next()) {
             PreparedStatement stm = (PreparedStatement) connection

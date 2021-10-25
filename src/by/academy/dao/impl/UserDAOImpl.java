@@ -1,7 +1,7 @@
 package by.academy.dao.impl;
 
 import by.academy.dao.ConnectionDAO;
-import by.academy.dao.Password;
+import by.academy.dao.PasswordUsers;
 import by.academy.dao.UserDAO;
 import by.academy.model.User;
 import com.mysql.jdbc.PreparedStatement;
@@ -11,9 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAOImpl implements UserDAO {
-    Password password;
+    PasswordUsers password;
 
-    public UserDAOImpl(Password password) {
+    public UserDAOImpl(PasswordUsers password) {
         this.password = password;
     }
 

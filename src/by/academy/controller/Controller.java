@@ -37,8 +37,6 @@ public class Controller implements ControllerStart {
     @Override
     public void start() {
 
-        System.out.println("вы вошли в приложение кинотеатр!");
-
         while (true) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("нажмите 0 для выхода из приложения");
@@ -70,9 +68,10 @@ public class Controller implements ControllerStart {
             System.out.println("для изменения users нажмите 2");
             System.out.println("для удаления movies нажмите 3");
             System.out.println("для изменения movies нажмите 4");
+            System.out.println("для добавления movies нажмите 5");
             if (scanner.hasNextInt()) {
                 int enter = scanner.nextInt();
-                if (enter >= 0 && enter <= 4) {
+                if (enter >= 0 && enter <= 5) {
                     if (enter == 0)
                         break;
                     if (enter == 1) {
@@ -86,14 +85,17 @@ public class Controller implements ControllerStart {
                         else System.err.println("пользователя с id " + user.getId() + " не существует");
                     }
                     if (enter == 3) {
-                        if (movieServiceImpl.delete(movie)) {
-
-                        }
+                        if (movieServiceImpl.delete(deleteMovies(movie))) System.out.println("фильм успешно удалён");
+                        else System.out.println("фильм с таким id и название не существует");
                     }
                     if (enter == 4) {
                         if (movieServiceImpl.update(updateMovies(this.movie)))
                             System.out.println("фильм с id " + movie.getId() + " изменён");
                         else System.out.println("фильма с id " + movie.getId() + " не существует");
+                    }
+                    if (enter == 5) {
+                        if (movieServiceImpl.create(createMovies(this.movie))) System.out.println("фильм успешно добавлен");
+                        else System.out.println("фильм с таким названием и датой уже есть");
                     }
                 } else System.err.println("введите цыфры от 0 до 4");
             } else System.err.println("введите цыфры");
@@ -106,17 +108,18 @@ public class Controller implements ControllerStart {
             System.out.println("открыто меню для managers");
             System.out.println("выйти из меню managers нажмите 0");
             System.out.println("для изменения movies нажмите 1");
-            System.out.println("");
             if (scanner.hasNextInt()) {
                 int enter = scanner.nextInt();
-                if (enter == 0)
-                    break;
-                if (enter == 1) {
-                    if (movieServiceImpl.update(updateMovies(this.movie)))
-                        System.out.println("фильм с id " + movie.getId() + " изменён");
-                    else System.out.println("фильма с id " + movie.getId() + " не существует");
-                }
-            }
+                if (enter >= 0 && enter <= 3) {
+                    if (enter == 0)
+                        break;
+                    if (enter == 1) {
+                        if (movieServiceImpl.update(updateMovies(this.movie)))
+                            System.out.println("фильм с id " + movie.getId() + " изменён");
+                        else System.out.println("фильма с id " + movie.getId() + " не существует");
+                    }
+                } else System.err.println("введите цыфры от 0 до 1");
+            } else System.out.println("введите цыфры");
         }
     }
 
@@ -130,7 +133,7 @@ public class Controller implements ControllerStart {
             System.out.println("для просмотра купленных билетов нажмите 3");
             if (scanner.hasNextInt()) {
                 int enter = scanner.nextInt();
-                if (enter >= 0 && enter <= 10) {
+                if (enter >= 0 && enter <= 3) {
                     if (enter == 0)
                         break;
                     if (enter == 1) {
@@ -146,10 +149,8 @@ public class Controller implements ControllerStart {
                         tickets.forEach(System.out::println);
                         System.out.println("\n");
                     }
-                } else
-                    System.err.println("введите цыфры от 0 до 3");
-            } else
-                System.err.println("введите цыфры");
+                } else System.err.println("введите цыфры от 0 до 3");
+            } else System.err.println("введите цыфры");
         }
     }
 
@@ -218,6 +219,19 @@ public class Controller implements ControllerStart {
         user.setId(id);
         return user;
     }
+    public Movie createMovies(Movie movie) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("-введите новое название фильма");
+        String name = scanner.nextLine();
+        movie.setNameMovie(name);
+        System.out.println("-введите новую дату для фильма");
+        String date = scanner.nextLine();
+        movie.setDate(LocalDate.parse(date));
+        System.out.println("-введите список билетов");
+        String list = scanner.nextLine();
+        movie.setListTicket(list);
+        return movie;
+    }
 
     public User updateUsers(User user) {
         Scanner scanner = new Scanner(System.in);
@@ -235,7 +249,13 @@ public class Controller implements ControllerStart {
 
     public Movie deleteMovies(Movie movie) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("введите ");
+        System.out.println("-введите id и название фильма для его удаления");
+        System.out.println("-введите id");
+        int id = scanner.nextInt();
+        movie.setId(id);
+        System.out.println("-введите название фильма");
+        String name = scanner.nextLine();
+        movie.setNameMovie(name);
         return movie;
     }
 }
