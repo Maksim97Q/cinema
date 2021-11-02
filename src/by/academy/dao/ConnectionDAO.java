@@ -28,11 +28,7 @@ public class ConnectionDAO {
             try {
                 conn.close();
             } catch (SQLException e) {
-                try {
-                    throw new SQLException("не закрылся " + e);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                System.out.println("не закрылся");
             }
         }
     }
