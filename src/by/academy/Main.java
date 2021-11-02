@@ -20,8 +20,7 @@ public class Main {
                 new MovieServiceImpl(new MovieDAOImpl()),
                 new UserServiceImpl(new UserDAOImpl(new PasswordUsers())),
                 new User(),
-                new Movie(),
-                new Ticket());
+                new Movie());
         controller.start();
     }
 }

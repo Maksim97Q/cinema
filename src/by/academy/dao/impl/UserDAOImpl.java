@@ -41,8 +41,9 @@ public class UserDAOImpl implements UserDAO {
     public boolean deleteUser(User user) throws SQLException {
         Connection connection = ConnectionDAO.connection();
         PreparedStatement stmt = (PreparedStatement) connection
-                .prepareStatement("SELECT id, login, password FROM user WHERE login=?");
+                .prepareStatement("SELECT id, login, password FROM user WHERE login=? AND id=?");
         stmt.setString(1, user.getLogin());
+        stmt.setInt(2, user.getId());
         ResultSet a = stmt.executeQuery();
         if (a.next()) {
             PreparedStatement stm = (PreparedStatement) connection

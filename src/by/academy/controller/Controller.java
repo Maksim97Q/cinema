@@ -16,20 +16,19 @@ import java.util.Scanner;
 
 public class Controller implements ControllerStart {
     private TicketServiceImpl ticketServiceImpl;
-    private final UserServiceImpl userServiceImpl;
+    private UserServiceImpl userServiceImpl;
     private MovieServiceImpl movieServiceImpl;
-    private final User user;
+    private User user;
     private Movie movie;
-    private Ticket ticket;
+
 
     public Controller(TicketServiceImpl ticketServiceImpl, MovieServiceImpl movieServiceImpl,
-                      UserServiceImpl userServiceImpl, User user, Movie movie, Ticket ticket) {
+                      UserServiceImpl userServiceImpl, User user, Movie movie) {
         this.ticketServiceImpl = ticketServiceImpl;
         this.movieServiceImpl = movieServiceImpl;
         this.userServiceImpl = userServiceImpl;
         this.user = user;
         this.movie = movie;
-        this.ticket = ticket;
 
 
     }
@@ -250,12 +249,12 @@ public class Controller implements ControllerStart {
     public Movie deleteMovies(Movie movie) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-введите id и название фильма для его удаления");
-        System.out.println("-введите id");
-        int id = scanner.nextInt();
-        movie.setId(id);
         System.out.println("-введите название фильма");
         String name = scanner.nextLine();
         movie.setNameMovie(name);
+        System.out.println("-введите id");
+        int id = scanner.nextInt();
+        movie.setId(id);
         return movie;
     }
 }
